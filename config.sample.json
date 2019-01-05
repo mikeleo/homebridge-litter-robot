@@ -1,0 +1,26 @@
+{
+    "platforms": [
+        {
+            "platform" : "LitterRobot",
+
+            "name" : "Litter Robot",
+
+            "email": "<email@example.com>",
+
+            "password": "<password>",
+
+            "apiKey": "<apiKey>",
+
+            "pollingInterval": 0,
+
+            "skipNightlightSwitch": false,
+
+            "skipPowerSwitch": false,
+
+            "skipOccupancySensor": false,
+
+            "skipFilter": false
+
+        }
+    ]
+}

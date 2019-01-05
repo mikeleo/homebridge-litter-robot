@@ -1,0 +1,19 @@
+{
+  "name": "homebridge-litter-robot",
+  "version": "0.1.0",
+  "author": {
+    "name": "Michael Leo",
+    "email": "michael.leo@gmail.com"
+  },
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "engines": {
+    "node": ">=8.0.0",
+    "homebridge": ">=0.4.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "node-persist": "^3.0.2"
+  }
+}
