@@ -1,6 +1,5 @@
 const LitterRobot = require('./lib/litter-robot');
-
-const pjson = require('./package.json');
+const path = require('path');
 
 let Service, Characteristic, Accessory, UUIDGen, HomebridgeAPI;
 
@@ -21,8 +20,8 @@ class HomebridgeLitterRobot {
         this.log = log;
         this.debug = config.debug || false;
         this.config = config;
-        this.cacheDirectory = config.cacheDirectory || HomebridgeAPI.user.persistPath();
-        
+        this.cacheDirectory = config.cacheDirectory || path.join(HomebridgeAPI.user.persistPath(), "..", "./cache/plugin-litter-robot");
+
         this.accessories = [];
 
         let platform = this;
@@ -31,7 +30,7 @@ class HomebridgeLitterRobot {
             email: config.email,
             password: config.password,
             apiKey: config.apiKey
-        }, `${this.cacheDirectory}/plugin-litter-robot`, {
+        }, this.cacheDirectory, {
             log: this.log,
             error: this.log
         }, this.debug);
