@@ -22,6 +22,7 @@ class HomebridgeLitterRobot {
         this.debug = config.debug || false;
         this.config = config;
         this.cacheDirectory = config.cacheDirectory || HomebridgeAPI.user.persistPath();
+        
         this.accessories = [];
 
         let platform = this;
@@ -30,7 +31,7 @@ class HomebridgeLitterRobot {
             email: config.email,
             password: config.password,
             apiKey: config.apiKey
-        }, this.cacheDirectory, {
+        }, `${this.cacheDirectory}/plugin-litter-robot`, {
             log: this.log,
             error: this.log
         }, this.debug);
