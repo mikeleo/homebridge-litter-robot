@@ -1,10 +1,11 @@
 {
   "name": "homebridge-litter-robot",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": {
     "name": "Michael Leo",
     "email": "michael.leo@gmail.com"
   },
+  "repository": "github:mikeleo/homebridge-litter-robot",
   "keywords": [
     "homebridge-plugin"
   ],

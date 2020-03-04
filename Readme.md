@@ -1,6 +1,6 @@
 # Homebridge Litter Robot Plugin
 
-[![npm version](https://img.shields.io/npm/v/homebridge-litter-robot.svg)](https://www.npmjs.com/package/homebridge-pilight)  [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+[![npm version](https://img.shields.io/npm/v/homebridge-litter-robot.svg)](https://www.npmjs.com/package/homebridge-litter-robot)  [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
 This is an accessory plugin for [Homebridge](https://github.com/nfarina/homebridge) allowing limited control and event 
 notifications of [Litter Robot](https://www.litter-robot.com) devices.
@@ -18,8 +18,7 @@ The Occupancy Sensor will trigger when the Drawer Full status is indicated.
 
 The Filter Maintenance is not supported in Home App as of iOS 12.1 and has not been tested. 
 
-TBD:
-- Add Cycle Stateless Switch to trigger the Cycle 
+The Cycle Switch will initiate a cycle and then set state to off.
 
 ## Install
 
@@ -47,6 +46,7 @@ The plugin registers itself as `LitterRobot`. You have the following options:
 | skipPowerSwitch      | false                                        |
 | skipOccupancySensor  | false                                        |
 | skipFilter           | false                                        |
+| skipCycleSwitch      | false                                        |
 
 
 The *email* and *password* are the values you use to login to the app.
@@ -89,7 +89,9 @@ The *skip** settings will configure the plugin to not create the associated devi
 
             "skipOccupancySensor": false,
 
-            "skipFilter": false
+            "skipFilter": false,
+
+            "skipCycleSwitch": false
 
         }
     ]
@@ -98,4 +100,4 @@ The *skip** settings will configure the plugin to not create the associated devi
 
 ## License
 
-Copyright 2019 by Michael Leo. Licensed under MIT.
+Copyright 2020 by Michael Leo. Licensed under MIT.
