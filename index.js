@@ -249,6 +249,31 @@ class HomebridgeLitterRobot {
             const lifeLevel = Math.floor(100.0 * (1.0 - (parseFloat(robot.cycleCount) / parseFloat(robot.cycleCapacity))));
             filterService.getCharacteristic(Characteristic.FilterLifeLevel).updateValue(lifeLevel);
         }
+
+        //5. Add Start Cycle Switch
+        let cycleService = accessory.getServiceByUUIDAndSubType(Service.Switch, "cycle");
+        if (this.config.skipCycleSwitch && cycleService) {
+
+            accessory.removeService(cycleService);
+
+        } else if (!this.config.skipCycleSwitch) {
+
+            if (!cycleService) {
+                cycleService = accessory.addService(new Service.Switch(`${accessory.displayName} Cycle`, "cycle"));
+            }
+            cycleService.getCharacteristic(Characteristic.On)
+              .on('set', (value, callback) => {
+                  this.sendCycleCommand(accessory, cycleService, value, () => {
+                      callback();
+                      setTimeout(() => {
+                          cycleService.getCharacteristic(Characteristic.On).updateValue(false);
+                      }, 1000)
+                  });
+              })
+              .on('get', (callback) => callback(null, false));
+
+        }
+
     }
 
     async updateValues() {
@@ -296,6 +321,12 @@ class HomebridgeLitterRobot {
                 if (filterService) {
                     const lifeLevel = Math.floor(100.0 * (1.0 - (parseFloat(robot.cycleCount) / parseFloat(robot.cycleCapacity))));
                     filterService.getCharacteristic(Characteristic.FilterLifeLevel).updateValue(lifeLevel);
+                }
+
+                //5. Add Start Cycle Switch
+                let cycleService = accessory.getServiceByUUIDAndSubType(Service.Switch, "cycle");
+                if (cycleService) {
+                    cycleService.getCharacteristic(Characteristic.On).updateValue(false);
                 }
             }
         });
@@ -418,7 +449,6 @@ class HomebridgeLitterRobot {
             case "offline":
             case "OFF":
             case "P":
-            case "BR":
                 status = false;
                 break;
             default:
@@ -450,12 +480,10 @@ class HomebridgeLitterRobot {
     }
 
     isStatusFault(unitStatus) {
-        let status = 1;
+        let status = false;
         switch(unitStatus) {
-            case "DF1":
-            case "DF2":
-            case "DFS":
-                status = 0;
+            case "BR":
+                status = true;
                 break;
             default:
                 break;
@@ -484,6 +512,23 @@ class HomebridgeLitterRobot {
 
         callback(null, fault);
 
+    }
+
+    async sendCycleCommand(accessory, service, value, callback) {
+        this.log(accessory.displayName, `set ${service.subtype} -> ${value}`);
+
+        let robots = await this.litterRobot.getRobots(true);
+
+        let robot = robots.find(element => {
+
+            let uuid = UUIDGen.generate(element.litterRobotId);
+
+            return (accessory.UUID === uuid);
+        });
+
+        await this.litterRobot.sendCycleCommand(robot);
+
+        callback();
     }
 
 }
