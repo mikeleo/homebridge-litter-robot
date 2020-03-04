@@ -12,8 +12,15 @@
     "node": ">=8.0.0",
     "homebridge": ">=0.4.0"
   },
+  "scripts": {
+    "debug-homebridge": "DEBUG=* ./node_modules/.bin/homebridge -D -P ../homebridge-litter-robot",
+    "homebridge": "./node_modules/.bin/homebridge -D -P ../homebridge-litter-robot"
+  },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "node-persist": "^3.0.2"
+  },
+  "devDependencies": {
+    "homebridge": "^0.4.52"
   }
 }
