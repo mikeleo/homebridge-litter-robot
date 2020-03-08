@@ -241,13 +241,17 @@ class HomebridgeLitterRobot {
         } else if (!this.config.skipFilter) {
 
             if (!filterService) {
-                filterService = accessory.addService(Service.FilterMaintenance, `${accessory.displayName} Capacity`);
+                filterService = accessory.addService(Service.FilterMaintenance, `${accessory.displayName} Waste Tray`);
             }
             filterService.getCharacteristic(Characteristic.FilterLifeLevel)
                 .on('get', (callback) => this.getCapacity(accessory, callback));
+            filterService.getCharacteristic(Characteristic.FilterChangeIndication)
+              .on('get', (callback) => this.getFilterChange(accessory, callback));
 
             const lifeLevel = Math.floor(100.0 * (1.0 - (parseFloat(robot.cycleCount) / parseFloat(robot.cycleCapacity))));
             filterService.getCharacteristic(Characteristic.FilterLifeLevel).updateValue(lifeLevel);
+            const changeFilter = parseFloat(robot.cycleCount) > parseFloat(robot.cycleCapacity);
+            filterService.getCharacteristic(Characteristic.FilterChangeIndication).updateValue(changeFilter);
         }
 
         //5. Add Start Cycle Switch
@@ -258,19 +262,16 @@ class HomebridgeLitterRobot {
 
         } else if (!this.config.skipCycleSwitch) {
 
+            const cycling = this.isStatusCycling(robot.unitStatus);
+
             if (!cycleService) {
                 cycleService = accessory.addService(new Service.Switch(`${accessory.displayName} Cycle`, "cycle"));
             }
             cycleService.getCharacteristic(Characteristic.On)
               .on('set', (value, callback) => {
-                  this.sendCycleCommand(accessory, cycleService, value, () => {
-                      callback();
-                      setTimeout(() => {
-                          cycleService.getCharacteristic(Characteristic.On).updateValue(false);
-                      }, 1000)
-                  });
+                  this.sendCycleCommand(accessory, cycleService, value, callback);
               })
-              .on('get', (callback) => callback(null, false));
+              .on('get', (callback) => callback(null, cycling));
 
         }
 
@@ -319,14 +320,17 @@ class HomebridgeLitterRobot {
                 //4. Add Filter Details
                 let filterService = accessory.getService(Service.FilterMaintenance);
                 if (filterService) {
+                    const changeFilter = parseFloat(robot.cycleCount) > parseFloat(robot.cycleCapacity);
                     const lifeLevel = Math.floor(100.0 * (1.0 - (parseFloat(robot.cycleCount) / parseFloat(robot.cycleCapacity))));
                     filterService.getCharacteristic(Characteristic.FilterLifeLevel).updateValue(lifeLevel);
+                    filterService.getCharacteristic(Characteristic.FilterChangeIndication).updateValue(changeFilter);
                 }
 
                 //5. Add Start Cycle Switch
                 let cycleService = accessory.getServiceByUUIDAndSubType(Service.Switch, "cycle");
                 if (cycleService) {
-                    cycleService.getCharacteristic(Characteristic.On).updateValue(false);
+                    const cycling = this.isStatusCycling(robot.unitStatus);
+                    cycleService.getCharacteristic(Characteristic.On).updateValue(cycling);
                 }
             }
         });
@@ -421,6 +425,25 @@ class HomebridgeLitterRobot {
         callback(null, value);
     }
 
+    async getFilterChange(accessory, callback) {
+        this.log(accessory.displayName, "get filter");
+
+        let robots = await this.litterRobot.getRobots(true);
+
+        let robot = robots.find(element => {
+
+            let uuid = UUIDGen.generate(element.litterRobotId);
+
+            return (accessory.UUID === uuid);
+        });
+
+        let value = false;
+        if (robot) {
+            value = (robot.cycleCount >= robot.cycleCapacity);
+        }
+        callback(null, value);
+    }
+
 
     async getCapacitySensor(accessory, callback) {
         this.log(accessory.displayName, "get Capacity");
@@ -450,6 +473,26 @@ class HomebridgeLitterRobot {
             case "OFF":
             case "P":
                 status = false;
+                break;
+            default:
+                break;
+        }
+
+        return status;
+    }
+
+    // CCC - Cat cycle completed
+    // CCP - Cat cycle processing (spinning)
+    // CSF - Cat sensor full (poop dump time)
+    // CSI - Cat sensor interrupted (cat got too curious mid-cycle)
+    isStatusCycling(unitStatus) {
+        let status = false;
+        switch(unitStatus) {
+            case "CCC":
+            case "CCP":
+            case "CSF":
+            case "CSI":
+                status = true;
                 break;
             default:
                 break;
