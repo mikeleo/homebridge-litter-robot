@@ -1,8 +1,9 @@
 # Homebridge Litter Robot Plugin
+[![mit license](https://badgen.net/badge/license/MIT/red)](http://doge.mit-license.org)
+[![npm](https://badgen.net/npm/v/homebridge-litter-robot)](https://www.npmjs.com/package/homebridge-litter-robot)
+[![npm](https://badgen.net/npm/dt/homebridge-litter-robot)](https://www.npmjs.com/package/homebridge-litter-robot)
 
-[![npm version](https://img.shields.io/npm/v/homebridge-litter-robot.svg)](https://www.npmjs.com/package/homebridge-litter-robot)  [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
-
-This is an accessory plugin for [Homebridge](https://github.com/nfarina/homebridge) allowing limited control and event 
+This is an accessory plugin for [Homebridge](https://github.com/homebridge/homebridge) allowing limited control and event 
 notifications of [Litter Robot](https://www.litter-robot.com) devices.
 
 ## What does this plugin do?
@@ -34,6 +35,8 @@ Alternativly, add the dependency into your local project with
 
 ## Configuration
 
+This easiest way to use this plugin is to use [homebridge-config-ui-x](https://www.npmjs.com/package/homebridge-config-ui-x).  
+To configure manually, add to the `platforms` section of homebridge's `config.json` after installing the plugin.  
 The plugin registers itself as `LitterRobot`. You have the following options:
 
 | Option               | Default                                      |
@@ -49,52 +52,26 @@ The plugin registers itself as `LitterRobot`. You have the following options:
 | skipCycleSwitch      | false                                        |
 
 
-The *email* and *password* are the values you use to login to the app.
-
-The apiKey is not currently published, but look around web for "x-api-key litter robot".
-
+The *email* and *password* are the values you use to login to the app.  
+The apiKey is not currently published, but look around web for "x-api-key litter robot".  
 The *skip** settings will configure the plugin to not create the associated device type.
-
 
 ### Example config.json
 
 
 ```json
 {
-  "bridge": {
-    "name": "Homebridge",
-    "username": "CC:22:3D:E3:CE:30",
-    "port": 51826,
-    "pin": "031-45-154"
-  },
-  "description": "This is an example configuration file with Litter Robot plugin.",
-
-  "platforms": [
-        {
-            "platform" : "LitterRobot",
-
-            "name" : "Litter Robot",
-
-            "email": "<email@example.com>",
-
-            "password": "<password>",
-
-            "apiKey": "<apiKey>",
-
-            "pollingInterval": 0,
-
-            "skipNightlightSwitch": false,
-
-            "skipPowerSwitch": false,
-
-            "skipOccupancySensor": false,
-
-            "skipFilter": false,
-
-            "skipCycleSwitch": false
-
-        }
-    ]
+    "platform" : "LitterRobot",
+    "name" : "Litter Robot",
+    "email": "<email@example.com>",
+    "password": "<password>",
+    "apiKey": "<apiKey>",
+    "pollingInterval": 0,
+    "skipNightlightSwitch": false,
+    "skipPowerSwitch": false,
+    "skipOccupancySensor": false,
+    "skipFilter": false,
+    "skipCycleSwitch": false
 }
 ```
 
