@@ -1,0 +1,68 @@
+{
+  "pluginAlias": "LitterRobot",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "The API Key is not currently published, but look around web for: x-api-key litter robot.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "Name",
+        "type": "string",
+        "default": "LitterRobot",
+        "required": true
+      },
+      "email": {
+        "title": "Email address",
+        "type": "string",
+        "required": true
+      },
+      "password": {
+        "title": "Password",
+        "type": "string",
+        "required": true,
+        "options": {
+          "hidden": true
+        }
+      },
+      "apiKey": {
+        "title": "API Key",
+        "type": "string",
+        "required": true
+      },
+      "pollingInterval": {
+        "title": "Polling Interval",
+        "type": "integer",
+        "required": false,
+        "placeholder": 5000
+      },
+      "skipNightlightSwitch": {
+        "title": "Skip Night Light Switch",
+        "type": "boolean",
+        "required": false
+      },
+      "skipPowerSwitch": {
+        "title": "Skip Power Switch",
+        "type": "boolean",
+        "required": false
+      },
+      "skipOccupancySensor": {
+        "title": "Skip Capacity Sensor",
+        "type": "boolean",
+        "required": false
+      },
+      "skipFilter": {
+        "title": "Skip Filter Maintenance",
+        "type": "boolean",
+        "required": false
+      },
+      "skipCycleSwitch": {
+        "title": "Skip Cycle Switch",
+        "type": "boolean",
+        "required": false
+      }
+    }
+  },
+  "form": null,
+  "display": null
+}
