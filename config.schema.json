@@ -1,0 +1,55 @@
+{
+  "pluginAlias": "LitterRobot",
+  "pluginType": "platform",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "Name",
+        "type": "string",
+        "default": "Litter Robot",
+        "required": true
+      },
+      "email": {
+        "title": "Email",
+        "type": "string",
+        "required": true
+      },
+      "password": {
+        "title": "password",
+        "type": "string",
+        "required": true
+      },
+      "pollingInterval": {
+        "title": "Polling Interval",
+        "type": "integer",
+        "required": false
+      },
+      "hideNightlightSwitch": {
+        "title": "Hide Night Light Device",
+        "type": "boolean",
+        "default": false,
+        "required": false
+      },
+      "hidePowerSwitch": {
+        "title": "Hide Power Switch Device",
+        "type": "boolean",
+        "default": false,
+        "required": false
+      },
+      "hideOccupancySensor": {
+        "title": "Hide Occupancy Sensor Device",
+        "type": "boolean",
+        "default": false,
+        "required": false
+      },
+      "hideFilter": {
+        "title": "Hide Filter Device",
+        "type": "boolean",
+        "default": false,
+        "required": false
+      }
+    }
+  }
+}
