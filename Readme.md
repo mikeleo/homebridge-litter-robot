@@ -1,6 +1,6 @@
 # Homebridge Litter Robot Plugin
 
-[![npm version](https://img.shields.io/npm/v/homebridge-litter-robot.svg)](https://www.npmjs.com/package/homebridge-pilight)  [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+[![npm version](https://img.shields.io/npm/v/homebridge-litter-robot.svg)](https://www.npmjs.com/package/homebridge-litter-robot)
 
 This is an accessory plugin for [Homebridge](https://github.com/nfarina/homebridge) allowing limited control and event 
 notifications of [Litter Robot](https://www.litter-robot.com) devices.

@@ -4,7 +4,7 @@
   "name": "homebridge-litter-robot",
   "version": "2.0.0",
   "description": "A short description about what your plugin does.",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/mikeleo/homebridge-litter-robot.git"
