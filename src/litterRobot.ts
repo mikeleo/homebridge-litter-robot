@@ -2,7 +2,7 @@ import axios from 'axios';
 import storage from 'node-persist';
 import fs from 'fs';
 import {Logger} from 'homebridge';
-import {LitterRobot as LitterRobotAPI, LitterRobotCommand, RobotData} from "./lib/litter-robot";
+import {LitterRobot as LitterRobotAPI, LitterRobotCommand, RobotData} from './lib/litter-robot';
 
 export class LitterRobot {
 
@@ -12,7 +12,7 @@ export class LitterRobot {
   private storageInit: boolean;
   private callingService: boolean;
 
-  constructor({email, password, apiKey, cacheDirectory, log, debug}) {
+  constructor({email, password, cacheDirectory, log, debug}) {
     this.api = new LitterRobotAPI({
       credentials: {
         username: email,

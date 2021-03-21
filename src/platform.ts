@@ -3,7 +3,7 @@ import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, 
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
 import { LitterRobotPlatformAccessory } from './platformAccessory';
 import {LitterRobot} from './litterRobot';
-import {RobotData} from "./lib/litter-robot";
+import {RobotData} from './lib/litter-robot';
 import Timeout = NodeJS.Timeout;
 
 export interface LitterRobotPlatformConfig extends PlatformConfig {
@@ -45,7 +45,6 @@ export class LitterRobotPlatform implements DynamicPlatformPlugin {
     this.litterRobot = new LitterRobot({
       email: config.email,
       password: config.password,
-      apiKey: config.apiKey,
       cacheDirectory: config.cacheDirectory || api.user.persistPath(),
       log: this.log,
       debug: config.debug || false,
@@ -127,10 +126,10 @@ export class LitterRobotPlatform implements DynamicPlatformPlugin {
     }
   }
 
-  addAccessory(robot: any, uuid: string) {
+  addAccessory(robot: RobotData, uuid: string) {
 
     // the accessory does not yet exist, so we need to create it
-    this.log.info("Adding new accessory: " + robot.litterRobotNickname);
+    this.log.info('Adding new accessory: ' + robot.litterRobotNickname);
 
     const log = this.log;
 
@@ -138,7 +137,7 @@ export class LitterRobotPlatform implements DynamicPlatformPlugin {
     const accessory = new this.api.platformAccessory(robot.litterRobotNickname, uuid);
 
     accessory.on('identify', () => {
-      log.info(accessory.displayName, "Identify!!!");
+      log.info(accessory.displayName, 'Identify!!!');
     });
 
     // store a copy of the device object in the `accessory.context`
