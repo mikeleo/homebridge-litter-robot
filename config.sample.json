@@ -9,17 +9,15 @@
 
             "password": "<password>",
 
-            "apiKey": "<apiKey>",
-
             "pollingInterval": 0,
 
-            "skipNightlightSwitch": false,
+            "hideNightlightSwitch": false,
 
-            "skipPowerSwitch": false,
+            "hidePowerSwitch": false,
 
-            "skipOccupancySensor": false,
+            "hideOccupancySensor": false,
 
-            "skipFilter": false
+            "hideFilter": false
 
         }
     ]

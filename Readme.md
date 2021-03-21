@@ -1,13 +1,13 @@
 # Homebridge Litter Robot Plugin
 
-[![npm version](https://img.shields.io/npm/v/homebridge-litter-robot.svg)](https://www.npmjs.com/package/homebridge-litter-robot)  [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+[![npm version](https://img.shields.io/npm/v/homebridge-litter-robot.svg)](https://www.npmjs.com/package/homebridge-litter-robot)
 
 This is an accessory plugin for [Homebridge](https://github.com/nfarina/homebridge) allowing limited control and event 
 notifications of [Litter Robot](https://www.litter-robot.com) devices.
 
 ## What does this plugin do?
 
-This plugin makes calls to the unpublished Litter Robot API to get status of litter robot(s) associated with the account.
+This plugin makes calls to the Litter Robot API to get status of litter robot(s) associated with the account.
 It creates four devices for each Litter Robot it finds, Power Switch, Night Light Switch, Occupancy Sensor and Filter Maintenance. 
 
 The Power Switch will turn activate the power of the Litter Robot.
@@ -16,19 +16,18 @@ The Nightlight Switch will turn on/off the nightlight.
 
 The Occupancy Sensor will trigger when the Drawer Full status is indicated.
 
-The Filter Maintenance is not supported in Home App as of iOS 12.1 and has not been tested. 
+The Filter Maintenance is not supported in Home App as of iOS 14.x.  It is available in the Eve App. 
 
-The Cycle Switch will initiate a cycle and then set state to off.
+TBD:
+- Add Cycle Stateless Switch to trigger the Cycle 
 
 ## Install
-
-**Important: This plugin is using ES6/ES2015. Please use an appropriate environment like NodeJS v4 or higher.**
 
 If you have already installed homebridge globally, just install
 
 ```npm install -g homebridge-litter-robot```
 
-Alternativly, add the dependency into your local project with
+Alternatively, add the dependency into your local project with
 
 ```npm install -S homebridge-litter-robot```
 
@@ -40,20 +39,17 @@ The plugin registers itself as `LitterRobot`. You have the following options:
 | -------------------- | -------------------------------------------- |
 | email                | <none>                                       |
 | password             | <none>                                       |
-| apiKey               | <none>                                       |
 | pollingInterval      | 0 - No Polling. Must be at least 5000 ms     |
-| skipNightlightSwitch | false                                        |
-| skipPowerSwitch      | false                                        |
-| skipOccupancySensor  | false                                        |
-| skipFilter           | false                                        |
-| skipCycleSwitch      | false                                        |
+| hideNightlightSwitch | false                                        |
+| hidePowerSwitch      | false                                        |
+| hideOccupancySensor  | false                                        |
+| hideFilter           | false                                        |
+| hideCycleSwitch      | false                                        |
 
 
 The *email* and *password* are the values you use to login to the app.
 
-The apiKey is not currently published, but look around web for "x-api-key litter robot".
-
-The *skip** settings will configure the plugin to not create the associated device type.
+The *hide** settings will configure the plugin to not create the associated device type.
 
 
 ### Example config.json
@@ -79,19 +75,18 @@ The *skip** settings will configure the plugin to not create the associated devi
 
             "password": "<password>",
 
-            "apiKey": "<apiKey>",
+            "pollingInterval": 60000,
 
-            "pollingInterval": 0,
+            "hideNightlightSwitch": false,
 
-            "skipNightlightSwitch": false,
+            "hidePowerSwitch": false,
 
-            "skipPowerSwitch": false,
+            "hideOccupancySensor": false,
 
-            "skipOccupancySensor": false,
+            "hideFilter": false,
 
-            "skipFilter": false,
+            "hideCycleSwitch": false
 
-            "skipCycleSwitch": false
 
         }
     ]
@@ -100,4 +95,4 @@ The *skip** settings will configure the plugin to not create the associated devi
 
 ## License
 
-Copyright 2020 by Michael Leo. Licensed under MIT.
+Copyright 2019-2021 by Michael Leo. Licensed under Apache Version 2.0 .
